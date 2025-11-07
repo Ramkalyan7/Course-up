@@ -2,11 +2,13 @@
   "name": "course-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:backend": "tsx scripts/test-backend.ts"
   },
   "dependencies": {
     "@perplexity-ai/perplexity_ai": "^0.16.0",
@@ -28,6 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

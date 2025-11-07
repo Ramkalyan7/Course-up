@@ -1,10 +1,11 @@
 import { Perplexity } from '@perplexity-ai/perplexity_ai';
 import { TopicBreakdownSchema, type TopicBreakdown } from '@/lib/schemas/course';
 import { SubtopicContentSchema, type SubtopicContent } from '@/lib/schemas/subtopic';
+import "dotenv/config"
 
 
 const perplexityClient = new Perplexity({
-    apiKey: process.env.PERPLEXITY_API_KEY!,
+    apiKey: process.env.PERPLEXITY_API_KEY,
 });
 
 export async function breakdownTopic(topic: string): Promise<TopicBreakdown> {
@@ -204,16 +205,16 @@ Provide:
 
 
 export async function searchArticles(searchTerm: string) {
-  const response = await perplexityClient.search.create({
-    query: searchTerm,
-    max_results: 5
-  });
+    const response = await perplexityClient.search.create({
+        query: searchTerm,
+        max_results: 5
+    });
 
-  return response.results.map((result) => ({
-    url: result.url,
-    title: result.title,
-    snippet: result.snippet || 'No preview available'
-  }));
+    return response.results.map((result) => ({
+        url: result.url,
+        title: result.title,
+        snippet: result.snippet || 'No preview available'
+    }));
 }
 
 
