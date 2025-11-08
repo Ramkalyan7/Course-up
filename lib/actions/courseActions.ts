@@ -14,6 +14,11 @@ export async function getLatestCourse() {
                         concepts: true,
                         videos: true,
                         articles: true,
+                        quizzes: {
+                            include: {
+                                questions: true
+                            }
+                        }
                     },
                 },
             },
@@ -41,6 +46,11 @@ export async function getCourseById(courseId: string) {
                         concepts: true,
                         videos: true,
                         articles: true,
+                        quizzes: {
+                            include: {
+                                questions: true
+                            }
+                        }
                     },
                 },
             },
