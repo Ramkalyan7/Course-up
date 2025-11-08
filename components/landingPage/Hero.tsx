@@ -52,7 +52,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
             onClick={() => router.push("/register")}
-            className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black font-bold text-lg rounded-xl transition-all shadow-2xl shadow-emerald-500/50 hover:scale-105 flex items-center gap-3"
+            className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black font-bold text-lg rounded-xl transition-all shadow-2xl shadow-emerald-500/50 hover:scale-105 flex items-center gap-3 cursor-pointer"
           >
             <span>Start Learning</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@ export default function Hero() {
           </button>
           <button
             onClick={() => router.push("/login")}
-            className="px-8 py-4 bg-gray-800 hover:bg-gray-700 border-2 border-gray-700 hover:border-emerald-500/50 text-gray-300 hover:text-emerald-400 font-bold text-lg rounded-xl transition-all"
+            className="px-8 py-4 bg-gray-800 hover:bg-gray-700 border-2 border-gray-700 hover:border-emerald-500/50 text-gray-300 hover:text-emerald-400 font-bold text-lg rounded-xl transition-all cursor-pointer"
           >
             Explore Courses
           </button>

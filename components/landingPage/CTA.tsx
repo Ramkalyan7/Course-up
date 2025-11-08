@@ -37,13 +37,13 @@ export default function CTA() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => router.push("/register")}
-                className="px-10 py-5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black font-bold text-xl rounded-xl transition-all shadow-2xl shadow-emerald-500/50 hover:scale-105"
+                className="px-10 py-5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black font-bold text-xl rounded-xl transition-all shadow-2xl shadow-emerald-500/50 hover:scale-105 cursor-pointer"
               >
                 Get Started For Free
               </button>
               <button
                 onClick={() => router.push("/login")}
-                className="px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/20 hover:border-emerald-500/50 text-white font-bold text-xl rounded-xl transition-all"
+                className="px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/20 hover:border-emerald-500/50 text-white font-bold text-xl rounded-xl transition-all cursor-pointer"
               >
                 Browse Courses
               </button>
