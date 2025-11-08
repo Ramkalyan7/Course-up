@@ -35,7 +35,6 @@
   }
 }
 
-
 @layer utilities {
   @keyframes fade-in {
     from {
@@ -70,12 +69,12 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #000000;
     border-radius: 10px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #374151;
     border-radius: 10px;
   }
 
