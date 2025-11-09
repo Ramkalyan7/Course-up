@@ -14,45 +14,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String     @id @default(cuid())
+  email    String     @unique
+  name     String
+  password String
+  courses  Course[]
+  progress Progress[]
+}
+
+model Progress {
+  id         String  @id @default(cuid())
+  userId     String
+  courseId   String
+  subtopicId String
+  completed  Boolean @default(false)
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  subtopic Subtopic @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId, subtopicId])
+  @@index([userId])
+  @@index([courseId])
+  @@index([subtopicId])
+}
 
 model Course {
   id        String     @id @default(cuid())
   mainTopic String
+  imageUrl  String     @default("https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=400&fit=crop")
   userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   status    String     @default("generating")
   subtopics Subtopic[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  progress  Progress[]
 
   @@index([userId])
 }
 
 model Subtopic {
-  id             String          @id @default(cuid())
+  id             String         @id @default(cuid())
   courseId       String
-  course         Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course         Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
   title          String
-  description    String          @db.Text
+  description    String         @db.Text
   difficulty     String
-  introduction   String          @db.Text
-  summary        String          @db.Text
-  commonMistakes String          @db.Text
+  introduction   String         @db.Text
+  summary        String         @db.Text
+  commonMistakes String         @db.Text
   concepts       Concept[]
   videos         YoutubeVideo[]
   articles       Article[]
   quizzes        Quiz[]
-  createdAt      DateTime        @default(now())
+  createdAt      DateTime       @default(now())
+  progress       Progress[]
 
   @@index([courseId])
 }
 
 model Concept {
-  id         String   @id @default(cuid())
-  subtopicId String
-  subtopic   Subtopic @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
-  concept    String
-  explanation String  @db.Text
-  example    String   @db.Text
+  id          String   @id @default(cuid())
+  subtopicId  String
+  subtopic    Subtopic @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
+  concept     String
+  explanation String   @db.Text
+  example     String   @db.Text
 
   @@index([subtopicId])
 }
@@ -85,20 +114,19 @@ model Quiz {
   id         String     @id @default(cuid())
   subtopicId String
   subtopic   Subtopic   @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
-  difficulty String
   questions  Question[]
 
   @@index([subtopicId])
 }
 
 model Question {
-  id            String @id @default(cuid())
-  quizId        String
-  quiz          Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
-  question      String @db.Text
-  options       String[]
-  correctIndex  Int
-  explanation   String @db.Text
+  id           String   @id @default(cuid())
+  quizId       String
+  quiz         Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  question     String   @db.Text
+  options      String[]
+  correctIndex Int
+  explanation  String   @db.Text
 
   @@index([quizId])
 }

@@ -16,32 +16,13 @@ export const SubtopicContentSchema = z.object({
     summary: z.string()
   }),
   
-  quizzes: z.object({
-    easy: z.array(
+  quizzes: z.array(
       z.object({
         question: z.string(),
         options: z.array(z.string()),
         correctAnswerIndex: z.number(),
         explanation: z.string()
-      })
-    ),
-    medium: z.array(
-      z.object({
-        question: z.string(),
-        options: z.array(z.string()),
-        correctAnswerIndex: z.number(),
-        explanation: z.string()
-      })
-    ),
-    hard: z.array(
-      z.object({
-        question: z.string(),
-        options: z.array(z.string()),
-        correctAnswerIndex: z.number(),
-        explanation: z.string()
-      })
-    )
-  })
+      }))
 });
 
 export type SubtopicContent = z.infer<typeof SubtopicContentSchema>;

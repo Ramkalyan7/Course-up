@@ -4,6 +4,7 @@ import {z} from "zod";
 
 export const TopicBreakdownSchema = z.object({
   mainTopic: z.string(),
+  imageUrl:z.string(),
   subtopics: z.array(
     z.object({
       title: z.string(),

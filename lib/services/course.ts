@@ -14,9 +14,6 @@ export async function generateCompleteCourseWithStream(
             message: 'Starting to create your course...'
         });
 
-        const course = await prisma.course.create({
-            data: { mainTopic: topic, userId, status: 'generating' }
-        });
 
         onProgress({
             status: 'in_progress',
@@ -24,6 +21,14 @@ export async function generateCompleteCourseWithStream(
         });
 
         const breakdown = await breakdownTopic(topic);
+
+        const course = await prisma.course.create({
+            data: {
+                mainTopic: topic,
+                imageUrl: breakdown.imageUrl,
+                userId, status: 'generating'
+            }
+        });
 
         onProgress({
             status: 'in_progress',
@@ -115,21 +120,20 @@ export async function generateCompleteCourseWithStream(
                 });
             }
 
-            for (const [difficulty, questions] of Object.entries(content.quizzes)) {
-                const quiz = await prisma.quiz.create({
-                    data: { subtopicId: dbSubtopic.id, difficulty }
-                });
+            const quiz = await prisma.quiz.create({
+                data: { subtopicId: dbSubtopic.id }
+            });
 
-                await prisma.question.createMany({
-                    data: (questions).map(q => ({
-                        quizId: quiz.id,
-                        question: q.question,
-                        options: q.options,
-                        correctIndex: q.correctAnswerIndex,
-                        explanation: q.explanation
-                    }))
-                });
-            }
+            await prisma.question.createMany({
+                data: (content.quizzes).map(q => ({
+                    quizId: quiz.id,
+                    question: q.question,
+                    options: q.options,
+                    correctIndex: q.correctAnswerIndex,
+                    explanation: q.explanation
+                }))
+            });
+
 
             onProgress({
                 status: 'in_progress',

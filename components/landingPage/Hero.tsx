@@ -67,21 +67,6 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* Stats */}
-        <div className="mt-20 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
-          <div>
-            <p className="text-4xl font-bold text-emerald-400 mb-2">10K+</p>
-            <p className="text-gray-500 text-sm">Active Learners</p>
-          </div>
-          <div>
-            <p className="text-4xl font-bold text-emerald-400 mb-2">500+</p>
-            <p className="text-gray-500 text-sm">Courses Created</p>
-          </div>
-          <div>
-            <p className="text-4xl font-bold text-emerald-400 mb-2">95%</p>
-            <p className="text-gray-500 text-sm">Satisfaction Rate</p>
-          </div>
-        </div>
       </div>
 
       {/* Scroll Indicator */}

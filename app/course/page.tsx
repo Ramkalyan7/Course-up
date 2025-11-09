@@ -6,6 +6,7 @@ import { getCourseById } from "@/lib/actions/courseActions";
 
 interface Course {
   id: string;
+  imageUrl: string;
   mainTopic: string;
   subtopics: Subtopic[];
 }
@@ -44,7 +45,6 @@ interface Article {
 
 interface Quiz {
   id: string;
-  difficulty: string;
   questions: Question[];
 }
 
@@ -59,9 +59,13 @@ interface Question {
 export default function CoursePage() {
   const router = useRouter();
   const [course, setCourse] = useState<Course | null>(null);
-  const [selectedSubtopic, setSelectedSubtopic] = useState<Subtopic | null>(null);
+  const [selectedSubtopic, setSelectedSubtopic] = useState<Subtopic | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
-  const [completedSubtopics, setCompletedSubtopics] = useState<Set<string>>(new Set());
+  const [completedSubtopics, setCompletedSubtopics] = useState<Set<string>>(
+    new Set()
+  );
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const fetchCourse = async () => {
@@ -152,11 +156,26 @@ export default function CoursePage() {
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="fixed bottom-6 right-6 z-50 lg:hidden w-14 h-14 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center shadow-2xl shadow-emerald-500/50"
       >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           {isSidebarOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
           ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           )}
         </svg>
       </button>
@@ -180,7 +199,9 @@ export default function CoursePage() {
               <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-500 bg-clip-text text-transparent">
                 CourseUp
               </h1>
-              <p className="text-xs text-gray-400 line-clamp-1">{course.mainTopic}</p>
+              <p className="text-xs text-gray-400 line-clamp-1">
+                {course.mainTopic}
+              </p>
             </div>
           </div>
           <button
@@ -207,15 +228,26 @@ export default function CoursePage() {
                   Course Modules
                 </h2>
                 <p className="text-xs text-gray-500 mt-1">
-                  {completedSubtopics.size} / {course.subtopics.length} completed
+                  {completedSubtopics.size} / {course.subtopics.length}{" "}
+                  completed
                 </p>
               </div>
               <button
                 onClick={() => setIsSidebarOpen(false)}
                 className="lg:hidden text-gray-400 hover:text-emerald-400"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -234,8 +266,18 @@ export default function CoursePage() {
               >
                 {isSubtopicCompleted(subtopic.id) && (
                   <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                 )}
@@ -253,7 +295,9 @@ export default function CoursePage() {
                   <div className="flex-1 min-w-0">
                     <p
                       className={`font-semibold text-sm mb-1 line-clamp-2 ${
-                        selectedSubtopic?.id === subtopic.id ? "text-white" : "text-gray-200"
+                        selectedSubtopic?.id === subtopic.id
+                          ? "text-white"
+                          : "text-gray-200"
                       }`}
                     >
                       {subtopic.title}
@@ -288,8 +332,18 @@ export default function CoursePage() {
                     </span>
                     {isSubtopicCompleted(selectedSubtopic.id) && (
                       <div className="flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-emerald-500/20 border border-emerald-500/50 text-emerald-400 text-xs font-bold rounded-full">
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <svg
+                          className="w-3 h-3 sm:w-4 sm:h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
                         </svg>
                         <span>COMPLETED</span>
                       </div>
@@ -307,17 +361,28 @@ export default function CoursePage() {
               {/* Action Buttons - MOVED TO TOP */}
               <div className="mb-8 sm:mb-10 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {/* Take Quiz Button */}
-                {selectedSubtopic.quizzes && selectedSubtopic.quizzes.length > 0 && (
-                  <button
-                    onClick={handleTakeQuiz}
-                    className="w-full py-3.5 sm:py-4 px-5 sm:px-6 bg-gray-900 hover:bg-gray-800 border-2 border-emerald-500 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 font-bold text-sm sm:text-base rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-500/20"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                    <span>Take Quiz</span>
-                  </button>
-                )}
+                {selectedSubtopic.quizzes &&
+                  selectedSubtopic.quizzes.length > 0 && (
+                    <button
+                      onClick={handleTakeQuiz}
+                      className="w-full py-3.5 sm:py-4 px-5 sm:px-6 bg-gray-900 hover:bg-gray-800 border-2 border-emerald-500 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 font-bold text-sm sm:text-base rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-500/20"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                        />
+                      </svg>
+                      <span>Take Quiz</span>
+                    </button>
+                  )}
 
                 {/* Mark as Complete Button */}
                 <button
@@ -326,19 +391,39 @@ export default function CoursePage() {
                     isSubtopicCompleted(selectedSubtopic.id)
                       ? "bg-gray-800 border-2 border-emerald-500/50 text-emerald-400 hover:bg-gray-700"
                       : "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50"
-                  } ${selectedSubtopic.quizzes && selectedSubtopic.quizzes.length > 0 ? '' : 'sm:col-span-2'}`}
+                  } ${
+                    selectedSubtopic.quizzes &&
+                    selectedSubtopic.quizzes.length > 0
+                      ? ""
+                      : "sm:col-span-2"
+                  }`}
                 >
                   {isSubtopicCompleted(selectedSubtopic.id) ? (
                     <>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span>Completed</span>
                     </>
                   ) : (
                     <>
                       <span>Mark as Complete</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -357,7 +442,9 @@ export default function CoursePage() {
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                     <span className="text-white text-base sm:text-lg">📖</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-100">Introduction</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-100">
+                    Introduction
+                  </h2>
                 </div>
                 <div className="bg-gray-900/70 backdrop-blur rounded-xl p-5 sm:p-7 border border-gray-800 shadow-xl">
                   <p className="text-gray-300 leading-relaxed text-base sm:text-lg">
@@ -372,7 +459,9 @@ export default function CoursePage() {
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                     <span className="text-white text-base sm:text-lg">💡</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-100">Key Concepts</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-100">
+                    Key Concepts
+                  </h2>
                 </div>
                 <div className="space-y-4 sm:space-y-5">
                   {selectedSubtopic.concepts.map((concept, index) => (
@@ -395,7 +484,9 @@ export default function CoursePage() {
                         <p className="text-xs text-emerald-400 font-semibold mb-2 uppercase tracking-wide">
                           Example
                         </p>
-                        <p className="text-gray-300 leading-relaxed text-sm sm:text-base">{concept.example}</p>
+                        <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                          {concept.example}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -410,9 +501,13 @@ export default function CoursePage() {
                 <section className="mb-6 sm:mb-10">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
                     <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                      <span className="text-white text-base sm:text-lg">🎥</span>
+                      <span className="text-white text-base sm:text-lg">
+                        🎥
+                      </span>
                     </div>
-                    <h2 className="text-xl sm:text-2xl font-bold text-gray-100">Video Resources</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-100">
+                      Video Resources
+                    </h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                     {selectedSubtopic.videos.map((video, index) => (
@@ -423,7 +518,9 @@ export default function CoursePage() {
                         <div className="relative">
                           <iframe
                             className="w-full aspect-video"
-                            src={`https://www.youtube.com/embed/${new URL(video.url).searchParams.get("v")}`}
+                            src={`https://www.youtube.com/embed/${new URL(
+                              video.url
+                            ).searchParams.get("v")}`}
                             title={video.title}
                             allowFullScreen
                           ></iframe>
@@ -432,7 +529,9 @@ export default function CoursePage() {
                           <h3 className="font-semibold text-gray-100 mb-2 line-clamp-2 leading-snug text-sm sm:text-base">
                             {video.title}
                           </h3>
-                          <p className="text-xs sm:text-sm text-gray-500">{video.channelTitle}</p>
+                          <p className="text-xs sm:text-sm text-gray-500">
+                            {video.channelTitle}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -445,9 +544,13 @@ export default function CoursePage() {
                 <section className="mb-6 sm:mb-10">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
                     <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                      <span className="text-white text-base sm:text-lg">📄</span>
+                      <span className="text-white text-base sm:text-lg">
+                        📄
+                      </span>
                     </div>
-                    <h2 className="text-xl sm:text-2xl font-bold text-gray-100">Reading Materials</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-100">
+                      Reading Materials
+                    </h2>
                   </div>
                   <div className="space-y-3 sm:space-y-4">
                     {selectedSubtopic.articles.map((article, index) => (
@@ -461,7 +564,9 @@ export default function CoursePage() {
                         <h3 className="font-semibold text-gray-100 mb-2 sm:mb-3 group-hover:text-emerald-400 transition-colors text-base sm:text-lg">
                           {article.title}
                         </h3>
-                        <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed">{article.snippet}</p>
+                        <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed">
+                          {article.snippet}
+                        </p>
                       </a>
                     ))}
                   </div>
@@ -474,7 +579,9 @@ export default function CoursePage() {
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                     <span className="text-white text-base sm:text-lg">📝</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-100">Summary</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-100">
+                    Summary
+                  </h2>
                 </div>
                 <div className="bg-gradient-to-br from-emerald-500/10 to-transparent rounded-xl p-5 sm:p-7 border-2 border-emerald-500/30 shadow-xl">
                   <p className="text-gray-300 leading-relaxed text-base sm:text-lg">

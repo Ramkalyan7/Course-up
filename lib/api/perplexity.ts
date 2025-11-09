@@ -20,13 +20,13 @@ Rules:
 1. Return ONLY valid JSON with no markdown formatting or explanation
 2. Each subtopic must be a distinct, learnable concept
 3. Order subtopics from beginner to advanced progression
-4. If you cannot create a proper breakdown, state this clearly in the response`
+4. Also give an image url representing the main topic`
             },
             {
                 role: 'user',
                 content: `Create a comprehensive learning curriculum for: "${topic}"
 
-Break this into 5-10 sequential subtopics. For each subtopic provide:
+Break this into 2-8 sequential subtopics. For each subtopic provide:
 - title: Clear, specific subtopic name (e.g., "Introduction to Variables" not just "Variables")
 - description: 1-2 sentences explaining what learners will understand after this subtopic
 - searchTerms: 2-3 specific search phrases to find quality educational content (think like a web search user)
@@ -42,6 +42,7 @@ Focus on creating a logical learning progression from foundational concepts to a
                     type: 'object',
                     properties: {
                         mainTopic: { type: 'string' },
+                        imageUrl: { type: 'string' },
                         subtopics: {
                             type: 'array',
                             items: {
@@ -83,8 +84,7 @@ Rules:
 1. Return ONLY valid JSON with no markdown or extra text
 2. Write in clear, simple language suitable for learners
 3. Include practical, real-world examples
-4. Each quiz must have exactly 4 options
-5. correctAnswerIndex must be 0, 1, 2, or 3`
+4. Give a quiz with 10 questions and each question has 4 options and only one correct answer , explanations for each answer`
             },
             {
                 role: 'user',
@@ -104,10 +104,10 @@ Provide:
 
 4. SUMMARY (100-150 words): Recap the main points and key takeaways
 
-5. QUIZZES: Create 3 multiple-choice questions:
-   - EASY: Test basic recall/understanding
-   - MEDIUM: Test application of concepts
-   - HARD: Test analysis/synthesis
+5. QUIZZES: Create a quiz section with 10 questions divided into three difficulty levels:
+   - EASY (4 questions)
+   - MEDIUM (3 questions)
+   - HARD (3 questions)
    
    Each question needs:
    - question: Clear, specific question
@@ -145,50 +145,18 @@ Provide:
                             required: ['introduction', 'keyConceptsExplained', 'commonMistakes', 'summary']
                         },
                         quizzes: {
-                            type: 'object',
-                            properties: {
-                                easy: {
-                                    type: 'array',
-                                    items: {
-                                        type: 'object',
-                                        properties: {
-                                            question: { type: 'string' },
-                                            options: { type: 'array', items: { type: 'string' } },
-                                            correctAnswerIndex: { type: 'number' },
-                                            explanation: { type: 'string' }
-                                        },
-                                        required: ['question', 'options', 'correctAnswerIndex', 'explanation']
-                                    }
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    question: { type: 'string' },
+                                    options: { type: 'array', items: { type: 'string' } },
+                                    correctAnswerIndex: { type: 'number' },
+                                    explanation: { type: 'string' }
                                 },
-                                medium: {
-                                    type: 'array',
-                                    items: {
-                                        type: 'object',
-                                        properties: {
-                                            question: { type: 'string' },
-                                            options: { type: 'array', items: { type: 'string' } },
-                                            correctAnswerIndex: { type: 'number' },
-                                            explanation: { type: 'string' }
-                                        },
-                                        required: ['question', 'options', 'correctAnswerIndex', 'explanation']
-                                    }
-                                },
-                                hard: {
-                                    type: 'array',
-                                    items: {
-                                        type: 'object',
-                                        properties: {
-                                            question: { type: 'string' },
-                                            options: { type: 'array', items: { type: 'string' } },
-                                            correctAnswerIndex: { type: 'number' },
-                                            explanation: { type: 'string' }
-                                        },
-                                        required: ['question', 'options', 'correctAnswerIndex', 'explanation']
-                                    }
-                                }
-                            },
-                            required: ['easy', 'medium', 'hard']
-                        }
+                                required: ['question', 'options', 'correctAnswerIndex', 'explanation']
+                            }
+                        },
                     },
                     required: ['title', 'aiGeneratedContent', 'quizzes']
                 }

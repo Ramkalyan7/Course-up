@@ -10,7 +10,7 @@ interface YoutubeVideo {
 
 export async function fetchYoutubeVideos(
   searchTerm: string,
-  maxResults: number = 3
+  maxResults: number = 2
 ): Promise<YoutubeVideo[]> {
   try {
     if (!process.env.YOUTUBE_API_KEY) {
