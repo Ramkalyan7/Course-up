@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import RegisterUser from "@/lib/actions/auth/Register";
+import { email, success } from "zod";
 
 export default function Register() {
   const router = useRouter();
@@ -17,6 +19,7 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    general:""
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +29,7 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
+      general:""
     };
 
     if (!formData.name.trim()) {
@@ -40,8 +44,8 @@ export default function Register() {
 
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
     }
 
     if (formData.password !== formData.confirmPassword) {
@@ -59,11 +63,13 @@ export default function Register() {
 
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/courses");
-    }, 1500);
+    const response = await RegisterUser(formData.email,formData.name,formData.password);
+    if(!response.success){
+      setErrors({...errors,general:response.message})
+    }
+    else{
+      router.push("/login")
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,6 +119,9 @@ export default function Register() {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name Field */}
               <div>
+                {errors.general && (
+                  <p className="mt-1 text-sm text-red-400">{errors.general}</p>
+                )}
                 <label
                   htmlFor="name"
                   className="block text-sm font-semibold text-gray-300 mb-2"
