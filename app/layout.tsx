@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Geist } from "next/font/google";
-import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
+import Provider from "@/components/Provider";
+import Navbar from "@/components/Navigation/Navbar";
 
 export const metadata: Metadata = {
   title: "CourseUp - AI-Powered Course Generator",
@@ -17,14 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-950 text-gray-100">
-        {/* <Navbar/> */}
-        <div className="flex">
-          {/* <Sidebar /> */}
+      <body className="bg-black text-gray-100">
+        <Provider>
           <main className={`${geist.className}  flex-1 min-h-screen`}>
+            <Navbar />
             {children}
           </main>
-        </div>
+        </Provider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
+"use server"
+
 import prisma from "@/lib/api/prisma";
 import bcrypt from "bcryptjs";
-import { signIn } from "next-auth/react";
 
 const RegisterUser = async (email: string, name: string, password: string) => {
     try {

@@ -9,9 +9,9 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/searchcourse", label: "Courses", icon: "📚" },
-    { href: "/your-courses", label: "Your Courses", icon: "🎓" },
-    { href: "/generate", label: "Generate Course", icon: "✨" },
+    { href: "/searchcourses", label: "Courses", icon: "📚" },
+    { href: "/yourcourses", label: "Your Courses", icon: "🎓" },
+    { href: "/createcourse", label: "Generate Course", icon: "✨" },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -92,7 +92,7 @@ export default function Sidebar() {
       </aside>
 
       {/* Desktop Sidebar (static, part of layout) */}
-      <aside className="hidden lg:block w-60 bg-black border-r border-gray-800 overflow-hidden max-h-screen sticky top-0 left-0 pt-20">
+      <aside className="hidden lg:block w-64 bg-black border-r border-gray-800 overflow-hidden max-h-screen sticky top-0 left-0 pt-20">
         {/* Navigation Links */}
         <nav className="px-4 space-y-1 pt-6">
           {links.map((link) => (
