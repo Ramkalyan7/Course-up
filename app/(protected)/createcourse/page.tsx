@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Sidebar from "@/components/Sidebar";
 
 interface ProgressUpdate {
   status: "in_progress" | "completed";
@@ -68,7 +67,7 @@ export default function CreateCourse() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden py-20 mx-auto">
+      <div className="min-h-screen bg-gradient-to-br bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden pb-10 mx-auto">
         {/* Animated background effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
