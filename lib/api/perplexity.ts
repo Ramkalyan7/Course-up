@@ -20,13 +20,15 @@ Rules:
 1. Return ONLY valid JSON with no markdown formatting or explanation
 2. Each subtopic must be a distinct, learnable concept
 3. Order subtopics from beginner to advanced progression
-4. Also give an image url representing the main topic , strictly use only free stock images which are related to the main topic , if you can't find an image matching to the topic , then find a generic image which represents the domain of the topic.`
-            },
+4. MainTopic field should be based on the topic given to you. It should be short and simple
+5. Also give an image url representing the main topic.
+6. Also give a difficulty levelto main topic based on the topic and course content . difficuly level can be either "beginner" or "intermediate" or "advanced" . This is differetn from the subtopic difficulty this is overall difficulty.
+`            },
             {
                 role: 'user',
                 content: `Create a comprehensive learning curriculum for: "${topic}"
 
-Break this into 2-8 sequential subtopics. For each subtopic provide:
+Break this into 4-6 sequential subtopics. For each subtopic provide:
 - title: Clear, specific subtopic name (e.g., "Introduction to Variables" not just "Variables")
 - description: 1-2 sentences explaining what learners will understand after this subtopic
 - searchTerms: 2-3 specific search phrases to find quality educational content (think like a web search user)
@@ -43,6 +45,7 @@ Focus on creating a logical learning progression from foundational concepts to a
                     properties: {
                         mainTopic: { type: 'string' },
                         imageUrl: { type: 'string' },
+                        difficulty: { type: 'string' },
                         subtopics: {
                             type: 'array',
                             items: {

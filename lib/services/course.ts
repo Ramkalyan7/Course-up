@@ -29,6 +29,7 @@ export async function generateCompleteCourseWithStream(
                 data: {
                     mainTopic: topic,
                     imageUrl: breakdown.imageUrl,
+                    difficulty:breakdown.difficulty,
                     userId,
                     status: 'generating'
                 }
