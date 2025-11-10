@@ -1,4 +1,5 @@
 import { generateCompleteCourseWithStream } from '@/lib/services/course';
+import { getCurrentUser } from '@/lib/session/serverSession';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -12,30 +13,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const userId = 'user-123';
+        const user = await getCurrentUser()
         const encoder = new TextEncoder();
 
         const stream = new ReadableStream({
             async start(controller) {
-                try {
-                    await generateCompleteCourseWithStream(topic, userId, (progress) => {
-                        controller.enqueue(
-                            encoder.encode(JSON.stringify(progress) + '\n')
-                        );
-                    });
 
-                    controller.close();
-                } catch (error) {
+                await generateCompleteCourseWithStream(topic, user?.id || "", (progress) => {
                     controller.enqueue(
-                        encoder.encode(
-                            JSON.stringify({
-                                status: 'completed',
-                                message: ` ${(error as Error).message}`
-                            }) + '\n'
-                        )
+                        encoder.encode(JSON.stringify(progress) + '\n')
                     );
-                    controller.close();
-                }
+                });
+
+                controller.close();
+
             }
         });
 

@@ -103,7 +103,7 @@ model Article {
   id         String   @id @default(cuid())
   subtopicId String
   subtopic   Subtopic @relation(fields: [subtopicId], references: [id], onDelete: Cascade)
-  url        String   @unique
+  url        String
   title      String
   snippet    String   @db.Text
 

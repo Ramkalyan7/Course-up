@@ -20,7 +20,7 @@ Rules:
 1. Return ONLY valid JSON with no markdown formatting or explanation
 2. Each subtopic must be a distinct, learnable concept
 3. Order subtopics from beginner to advanced progression
-4. Also give an image url representing the main topic`
+4. Also give an image url representing the main topic , strictly use only free stock images which are related to the main topic , if you can't find an image matching to the topic , then find a generic image which represents the domain of the topic.`
             },
             {
                 role: 'user',

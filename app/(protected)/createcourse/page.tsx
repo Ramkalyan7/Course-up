@@ -2,10 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface ProgressUpdate {
   status: "in_progress" | "completed";
   message: string;
+}
+
+interface PopularTopicType {
+  title: string;
+  icon: string;
+  color: string;
 }
 
 export default function CreateCourse() {
@@ -14,6 +21,7 @@ export default function CreateCourse() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [isComplete, setIsComplete] = useState(false);
+  const [error , setError] = useState<string|null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,15 +32,20 @@ export default function CreateCourse() {
     setIsComplete(false);
 
     try {
-      const response = await fetch("/api/courses/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: topic.trim() }),
-      });
+      const response = await axios.post(
+        "/api/courses/generate",
+        {
+          topic: topic.trim(),
+        },
+        {
+          responseType: "stream",
+          adapter: "fetch",
+        }
+      );
 
-      if (!response.body) return;
+      if (!response.data) return;
 
-      const reader = response.body.getReader();
+      const reader = response.data.getReader();
       const decoder = new TextDecoder();
 
       while (true) {
@@ -60,14 +73,37 @@ export default function CreateCourse() {
       }
     } catch (error) {
       console.error("Error:", error);
-      setMessages((prev) => [...prev, "❌ Error generating course"]);
+      setError("Error while generating the course . Please try again !")
       setIsGenerating(false);
     }
   };
 
+  const PopularTopics: PopularTopicType[] = [
+    {
+      title: "React Fundamentals",
+      icon: "⚛️",
+      color: "from-blue-500/20 to-cyan-500/20",
+    },
+    {
+      title: "Python Basics",
+      icon: "🐍",
+      color: "from-yellow-500/20 to-green-500/20",
+    },
+    {
+      title: "Web Design 101",
+      icon: "🎨",
+      color: "from-purple-500/20 to-pink-500/20",
+    },
+    {
+      title: "Data Science",
+      icon: "📊",
+      color: "from-orange-500/20 to-red-500/20",
+    },
+  ];
+
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden pb-10 mx-auto">
+      <div className="min-h-screen bg-gradient-to-br bg-black flex flex-col items-center justify-center px-4 relative overflow-hidden pb-10 mx-auto pt-5 lg:pt-10">
         {/* Animated background effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -97,12 +133,18 @@ export default function CreateCourse() {
           <div className="w-full">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Input Box with better design */}
+               {error && <p className="mt-1 text-sm text-red-400 text-center font-semibold">{error}</p>}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
                 <input
                   type="text"
                   value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
+                  onChange={(e) => {
+                    setTopic(e.target.value)
+                    if(error){
+                      setError(null)
+                    }
+                  }}
                   placeholder="What do you want to master today?"
                   disabled={isGenerating}
                   className="relative w-full px-8 py-5 bg-slate-900/80 backdrop-blur-sm border-2 border-slate-700 hover:border-emerald-500/50 focus:border-emerald-500 rounded-xl text-gray-100 text-lg placeholder-gray-500 focus:outline-none transition-all duration-300 disabled:bg-gray-800 disabled:border-gray-700 disabled:cursor-not-allowed shadow-xl"
@@ -113,7 +155,7 @@ export default function CreateCourse() {
               <button
                 type="submit"
                 disabled={isGenerating || !topic.trim()}
-                className="group relative w-full py-5 px-8 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 disabled:from-gray-700 disabled:to-gray-700 text-slate-950 font-bold text-lg rounded-xl transition-all duration-300 disabled:cursor-not-allowed shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 disabled:scale-100 disabled:shadow-none"
+                className="group relative w-full py-5 px-8 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 disabled:from-gray-700 disabled:to-gray-700 text-slate-950 font-bold text-lg rounded-xl transition-all duration-300 disabled:cursor-not-allowed shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 disabled:scale-100 disabled:shadow-none cursor-pointer"
               >
                 <span className="relative z-10">
                   {isGenerating ? (
@@ -167,33 +209,12 @@ export default function CreateCourse() {
                 <span className="text-xs text-gray-500">Click to try</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    title: "React Fundamentals",
-                    icon: "⚛️",
-                    color: "from-blue-500/20 to-cyan-500/20",
-                  },
-                  {
-                    title: "Python Basics",
-                    icon: "🐍",
-                    color: "from-yellow-500/20 to-green-500/20",
-                  },
-                  {
-                    title: "Web Design 101",
-                    icon: "🎨",
-                    color: "from-purple-500/20 to-pink-500/20",
-                  },
-                  {
-                    title: "Data Science",
-                    icon: "📊",
-                    color: "from-orange-500/20 to-red-500/20",
-                  },
-                ].map((example) => (
+                {PopularTopics.map((example) => (
                   <button
                     key={example.title}
                     onClick={() => setTopic(example.title)}
                     disabled={isGenerating}
-                    className={`group relative p-5 bg-gradient-to-br ${example.color} backdrop-blur-sm border border-slate-700/50 hover:border-emerald-500/50 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 disabled:scale-100 shadow-lg hover:shadow-emerald-500/10`}
+                    className={`group relative p-5 bg-gradient-to-br ${example.color} backdrop-blur-sm border border-slate-700/50 hover:border-emerald-500/50 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 disabled:scale-100 shadow-lg hover:shadow-emerald-500/10 cursor-pointer`}
                   >
                     <div className="flex items-center gap-4">
                       <div className="text-3xl">{example.icon}</div>
@@ -256,12 +277,17 @@ export default function CreateCourse() {
                   </div>
                 </div>
                 <h2 className="text-4xl font-bold mb-3 text-gray-100">
-                  Crafting <span className="text-emerald-400">{topic}</span>
+                  Crafting{" "}
+                  <span className="text-emerald-400">
+                    {topic.length < 15
+                      ? topic
+                      : `${topic.substring(0, 15)}....`}
+                  </span>
                 </h2>
                 <p className="text-gray-400 text-lg">
                   {isComplete
                     ? "✨ Your course is ready!"
-                    : "Generating personalized content just for you..."}
+                    : "Generating your course content with AI... This might take a moment ⚡"}
                 </p>
               </div>
 
@@ -284,15 +310,6 @@ export default function CreateCourse() {
                           className="group p-4 bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-lg border-l-4 border-emerald-500 text-gray-100 animate-fade-in hover:from-slate-800/80 hover:to-slate-800/30 transition-all"
                         >
                           <div className="flex items-start gap-3">
-                            <span className="text-emerald-400 flex-shrink-0 mt-0.5">
-                              {msg.includes("✅")
-                                ? "✅"
-                                : msg.includes("⏳")
-                                ? "⏳"
-                                : msg.includes("🚀")
-                                ? "🚀"
-                                : "📝"}
-                            </span>
                             <p className="flex-1 leading-relaxed">{msg}</p>
                           </div>
                         </div>
