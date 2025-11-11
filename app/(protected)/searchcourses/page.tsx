@@ -1,9 +1,10 @@
 import Pagination from "@/components/searchCourses/Btns";
 import Course from "@/components/searchCourses/Course";
+import EmptyStateComponent from "@/components/searchCourses/EmptyComponent";
 import Filters from "@/components/searchCourses/Filters";
 import Search from "@/components/searchCourses/Search";
 import prisma from "@/lib/api/prisma";
-import Link from "next/link";
+import { Prisma } from "@/lib/generated/prisma";
 
 type Props = {
   searchParams: Promise<{
@@ -21,46 +22,58 @@ export default async function CoursesPage({ searchParams }: Props) {
   let currentPage = parseInt(p || "1");
   const difficultyLevel = d?.toLocaleLowerCase().trim() || "all";
 
+  const filter1: Prisma.CourseWhereInput = {
+    difficulty:
+      difficultyLevel === "all"
+        ? undefined
+        : {
+            equals: difficultyLevel.toString(),
+            mode: "insensitive",
+          },
+    OR: [
+      { mainTopic: { contains: searchQuery, mode: "insensitive" } },
+      { description: { contains: searchQuery, mode: "insensitive" } },
+    ],
+  };
+
   const getCourses = async () => {
-    const skip = currentPage - 1 * ITEMS_PER_PAGE;
-    const coursesList = await prisma.course.findMany({
-      where:
-        searchQuery.length > 0
-          ? {
-              mainTopic: { contains: searchQuery, mode: "insensitive" },
-              difficulty: difficultyLevel=="all" ? undefined : difficultyLevel,
-            }
-          : {},
-      skip: skip > 0 ? skip : 0,
-      take: ITEMS_PER_PAGE,
-      orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        status: true,
-        mainTopic: true,
-        imageUrl: true,
-        difficulty: true,
-        _count: {
-          select: {
-            subtopics: true,
+    try {
+      const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+      const coursesList = await prisma.course.findMany({
+        where: searchQuery.length > 0 ? filter1 : {},
+        skip: skip > 0 ? skip : 0,
+        take: ITEMS_PER_PAGE,
+        select: {
+          id: true,
+          status: true,
+          mainTopic: true,
+          description: true,
+          imageUrl: true,
+          difficulty: true,
+          _count: {
+            select: {
+              subtopics: true,
+            },
           },
         },
-      },
-    });
-    return coursesList;
+      });
+      return coursesList;
+    } catch (error) {
+      console.log("getCourses", error);
+      return [];
+    }
   };
 
   const getTotalPages = async () => {
-    const totalPages = await prisma.course.count({
-      where:
-        searchQuery.length > 0
-          ? {
-              mainTopic: { contains: searchQuery, mode: "insensitive" },
-              difficulty: difficultyLevel,
-            }
-          : {},
-    });
-    return totalPages;
+    try {
+      const totalPages = await prisma.course.count({
+        where: searchQuery.length > 0 ? filter1 : {},
+      });
+      return totalPages;
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
   };
 
   let TotalPages = await getTotalPages();
@@ -68,8 +81,6 @@ export default async function CoursesPage({ searchParams }: Props) {
   if (currentPage > TotalPages) currentPage = TotalPages;
 
   const courses = await getCourses();
-  console.log(courses);
-  console.log(TotalPages);
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden ">
@@ -91,17 +102,24 @@ export default async function CoursesPage({ searchParams }: Props) {
             </p>
           </div>
 
-          <Search />
-          <Filters difficultyLevel={difficultyLevel} />
+          <Search initialSearchInput={searchQuery} />
+          <Filters
+            difficultyLevel={difficultyLevel}
+            searchQuery={searchQuery}
+          />
 
-          {courses.length > 0 ? (
+          {courses.length > 0 && TotalPages > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {courses.map((course, index) => (
                   <Course key={course.id} course={course} index={index} />
                 ))}
               </div>
-              <Pagination currentPage={currentPage} totalPages={TotalPages} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={TotalPages}
+                searchQuery={searchQuery}
+              />
             </>
           ) : (
             <EmptyStateComponent />
@@ -111,28 +129,3 @@ export default async function CoursesPage({ searchParams }: Props) {
     </div>
   );
 }
-
-const EmptyStateComponent = () => {
-  return (
-    <div className="text-center py-32">
-      <div className="relative inline-block mb-8">
-        <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl" />
-        <div className="relative w-24 h-24 bg-linear-to-br from-gray-900 to-gray-800 rounded-full flex items-center justify-center border border-gray-800">
-          <span className="text-5xl">🔍</span>
-        </div>
-      </div>
-      <h3 className="text-3xl font-bold text-gray-300 mb-3">
-        No courses found
-      </h3>
-      <p className="text-gray-500 mb-8 text-lg">
-        Try adjusting your search or filter criteria
-      </p>
-      <Link
-        href={"/searchcourses"}
-        className="px-8 py-3 bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-500/30"
-      >
-        Clear Filters
-      </Link>
-    </div>
-  );
-};

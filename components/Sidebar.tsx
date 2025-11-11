@@ -9,9 +9,9 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/searchcourses", label: "Courses", icon: "📚" },
-    { href: "/createcourse", label: "Generate Course", icon: "✨" },
-    { href: "/yourcourses", label: "Your Courses", icon: "🎓" },
+    { href: "/searchcourses", label: "Courses" },
+    { href: "/createcourse", label: "Generate Course" },
+    { href: "/yourcourses", label: "Your Courses" },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -55,9 +55,8 @@ export default function Sidebar() {
         />
       )}
 
-      {/* Mobile Sidebar (fixed) */}
       <aside
-        className={`pt-20 fixed left-0 top-0 h-screen w-72 bg-black border-r border-gray-800 z-40 transition-transform duration-300 lg:hidden overflow-hidden ${
+        className={`pt-20 fixed left-0 top-0 bottom-0 min-h-screen w-72 bg-black border-r border-gray-800 z-40 transition-transform duration-300 lg:hidden overflow-hidden ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -74,7 +73,6 @@ export default function Sidebar() {
                   : "text-gray-400 hover:text-emerald-400 hover:bg-gray-900/30"
               }`}
             >
-              <span className="text-2xl">{link.icon}</span>
               <span className="font-semibold">{link.label}</span>
             </Link>
           ))}
@@ -91,9 +89,7 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Desktop Sidebar (static, part of layout) */}
-      <aside className="hidden lg:block min-w-64 bg-black border-r border-gray-800 overflow-hidden max-h-screen sticky top-0 left-0 pt-20">
-        {/* Navigation Links */}
+      <aside className="hidden lg:block min-w-60 bg-black border-r border-gray-800 overflow-hidden max-h-screen sticky top-0 left-0 pt-20">
         <nav className="px-4 space-y-1 pt-6">
           {links.map((link) => (
             <Link
@@ -101,11 +97,10 @@ export default function Sidebar() {
               href={link.href}
               className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group ${
                 isActive(link.href)
-                  ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white"
+                  ? "bg-linear-to-r from-emerald-500 to-emerald-600 text-white"
                   : "text-gray-400 hover:text-emerald-400 hover:bg-gray-900/30"
               }`}
             >
-              <span className="text-2xl">{link.icon}</span>
               <span className="font-semibold">{link.label}</span>
             </Link>
           ))}

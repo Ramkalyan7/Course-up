@@ -21,8 +21,10 @@ Rules:
 2. Each subtopic must be a distinct, learnable concept
 3. Order subtopics from beginner to advanced progression
 4. MainTopic field should be based on the topic given to you. It should be short and simple
-5. Also give an image url representing the main topic.
-6. Also give a difficulty levelto main topic based on the topic and course content . difficuly level can be either "beginner" or "intermediate" or "advanced" . This is differetn from the subtopic difficulty this is overall difficulty.
+5. Also give a brief description of the main topic in 2-3 sentences.
+6. Also give an image url representing the main topic , use only free stock images from Pexel and Unsplash.
+7. Also give a difficulty levelto main topic based on the topic and course content . Difficuly level can be either "beginner" or "intermediate" or "advanced" . This is different from the subtopic difficulty this is overall difficulty.
+8. For mainTopic don't use the user entered prompt.
 `            },
             {
                 role: 'user',
@@ -44,6 +46,7 @@ Focus on creating a logical learning progression from foundational concepts to a
                     type: 'object',
                     properties: {
                         mainTopic: { type: 'string' },
+                        description: { type: 'string' },
                         imageUrl: { type: 'string' },
                         difficulty: { type: 'string' },
                         subtopics: {

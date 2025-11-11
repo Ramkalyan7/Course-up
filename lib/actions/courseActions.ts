@@ -53,6 +53,15 @@ export async function getCourseById(courseId: string) {
                         }
                     },
                 },
+                progress: {
+                    where: {
+                        courseId: courseId,
+                    },
+                    select: {
+                        subtopicId: true,
+                        completed:true
+                    }
+                }
             },
         })
 
@@ -64,5 +73,39 @@ export async function getCourseById(courseId: string) {
     } catch (error) {
         console.error('Error fetching course:', error)
         return { error: 'Failed to fetch course' }
+    }
+}
+
+
+export async function SetProgress(
+    userId: string,
+    courseId: string,
+    subtopicId: string,
+    status: boolean
+) {
+    try {
+        await prisma.progress.upsert({
+            where: {
+                userId_courseId_subtopicId: {
+                    userId: userId,
+                    courseId: courseId,
+                    subtopicId: subtopicId,
+                },
+            },
+            create: {
+                userId: userId,
+                courseId: courseId,
+                subtopicId: subtopicId,
+                completed: status,
+            },
+            update: {
+                completed: status,
+            },
+        });
+
+        return { success: true };
+    } catch (error) {
+        console.error("Error while updating course progress", error);
+        return { error: "Failed to update progress" };
     }
 }

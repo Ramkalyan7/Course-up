@@ -1,7 +1,7 @@
 import { breakdownTopic, generateSubtopicContent, searchArticles } from '@/lib/api/perplexity';
 import { fetchYoutubeVideos } from '@/lib/api/youtube';
 import prisma from '@/lib/api/prisma';
-import { ProgressUpdate } from '@/lib/types/progress';
+import { ProgressUpdate } from '@/lib/types/requestProgress';
 
 export async function generateCompleteCourseWithStream(
     topic: string,
@@ -28,6 +28,7 @@ export async function generateCompleteCourseWithStream(
             const course = await tx.course.create({
                 data: {
                     mainTopic: topic,
+                    description: breakdown.description,
                     imageUrl: breakdown.imageUrl,
                     difficulty:breakdown.difficulty,
                     userId,

@@ -1,14 +1,20 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  searchQuery: string;
 }
 
 export default function Pagination({
   currentPage,
   totalPages,
+  searchQuery,
 }: PaginationProps) {
+  const router = useRouter();
+
   const getPageNumbers = () => {
     const pages = [];
     const showEllipsis = totalPages > 7;
@@ -47,11 +53,15 @@ export default function Pagination({
 
   const handlePrevious = () => {
     if (currentPage > 1) {
+      router.push(`/searchcourses?q=${searchQuery}&p=${currentPage - 1}`);
+      return;
     }
   };
 
   const handleNext = () => {
     if (currentPage < totalPages) {
+      router.push(`/searchcourses?q=${searchQuery}&p=${currentPage + 1}`);
+      return;
     }
   };
 
@@ -63,7 +73,7 @@ export default function Pagination({
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className="px-4 py-2 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-900/50 border border-gray-800 hover:border-emerald-500/50 disabled:border-gray-800 text-gray-300 hover:text-emerald-400 disabled:text-gray-600 rounded-lg transition-all disabled:cursor-not-allowed flex items-center gap-2"
+        className="px-4 py-2 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-900/50 border border-gray-800 hover:border-emerald-500/50 disabled:border-gray-800 text-gray-300 hover:text-emerald-400 disabled:text-gray-600 rounded-lg transition-all disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
       >
         <svg
           className="w-5 h-5"
@@ -100,8 +110,14 @@ export default function Pagination({
 
           return (
             <button
+              onClick={() => {
+                router.push(
+                  `/searchcourses?q=${searchQuery}&p=${pageNumber}`
+                );
+                return;
+              }}
               key={pageNumber}
-              className={`min-w-[40px] h-10 rounded-lg font-semibold transition-all ${
+              className={`min-w-[40px] h-10 rounded-lg font-semibold transition-all cursor-pointer ${
                 isActive
                   ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/30"
                   : "bg-gray-900 hover:bg-gray-800 border border-gray-800 hover:border-emerald-500/50 text-gray-300 hover:text-emerald-400"
@@ -117,7 +133,7 @@ export default function Pagination({
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-900/50 border border-gray-800 hover:border-emerald-500/50 disabled:border-gray-800 text-gray-300 hover:text-emerald-400 disabled:text-gray-600 rounded-lg transition-all disabled:cursor-not-allowed flex items-center gap-2"
+        className="px-4 py-2 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-900/50 border border-gray-800 hover:border-emerald-500/50 disabled:border-gray-800 text-gray-300 hover:text-emerald-400 disabled:text-gray-600 rounded-lg transition-all disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
       >
         <span className="hidden sm:inline">Next</span>
         <svg

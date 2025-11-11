@@ -1,9 +1,9 @@
-import Image from "next/image";
-import React from "react";
+import Link from "next/link";
 
 interface courseType {
   id: string;
   mainTopic: string;
+  description: string;
   imageUrl: string;
   difficulty: string;
   _count: {
@@ -13,7 +13,8 @@ interface courseType {
 
 const Course = ({ course, index }: { course: courseType; index: number }) => {
   return (
-    <div
+    <Link
+      href={`/course/${course.id}`}
       key={course.id}
       className="group relative animate-fade-in"
       style={{ animationDelay: `${index * 100}ms` }}
@@ -25,18 +26,17 @@ const Course = ({ course, index }: { course: courseType; index: number }) => {
         {/* Thumbnail */}
         <div className="relative h-52 bg-gray-800 overflow-hidden">
           <div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent z-10" />
-          <Image
+          <img
             src={course.imageUrl}
             alt={course.mainTopic}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-            fill={true}
           />
           <div className="absolute top-4 right-4 z-20">
             <span
-              className={`px-4 py-1.5 rounded-xl text-xs font-bold backdrop-blur-sm ${
-                course.difficulty === "Beginner"
+              className={`px-4 py-1.5 rounded-xl text-xs font-extrabold backdrop-blur-sm ${
+                course.difficulty === "beginner"
                   ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-400"
-                  : course.difficulty === "Intermediate"
+                  : course.difficulty === "intermediate"
                   ? "bg-yellow-500/20 border border-yellow-500/50 text-yellow-400"
                   : "bg-red-500/20 border border-red-500/50 text-red-400"
               }`}
@@ -52,7 +52,7 @@ const Course = ({ course, index }: { course: courseType; index: number }) => {
             {course.mainTopic}
           </h3>
           <p className="text-gray-400 text-sm mb-5 line-clamp-2 leading-relaxed">
-            course description
+            {course.description}
           </p>
 
           {/* Meta Info */}
@@ -80,7 +80,7 @@ const Course = ({ course, index }: { course: courseType; index: number }) => {
           </div>
 
           {/* CTA Button */}
-          <button className="w-full py-3.5 bg-gray-800/50 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-emerald-600 border border-gray-700 hover:border-emerald-500 text-gray-300 hover:text-white font-bold rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/30 flex items-center justify-center gap-2">
+          <button className="w-full py-3.5 bg-gray-800/50 hover:bg-gradient-to-r hover:from-emerald-500 hover:to-emerald-600 border border-gray-700 hover:border-emerald-500 text-gray-300 hover:text-white font-bold rounded-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer">
             <span>Start Learning</span>
             <svg
               className="w-4 h-4 group-hover:translate-x-1 transition-transform"
@@ -98,7 +98,7 @@ const Course = ({ course, index }: { course: courseType; index: number }) => {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

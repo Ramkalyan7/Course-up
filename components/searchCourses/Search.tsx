@@ -1,20 +1,25 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
-const Search = () => {
+const Search = ({initialSearchInput=""}:{initialSearchInput:string}) => {
   const [searchInput, setSearchInput] = useState<string>("");
+  console.log("Infinity",initialSearchInput)
   const router = useRouter();
 
   const handleSearch = () => {
     router.push(`/searchcourses?q=${searchInput}`);
   };
 
+  useEffect(()=>{
+    setSearchInput(initialSearchInput)
+  },[initialSearchInput])
+
   return (
-    <div className="mb-10 max-w-2xl mx-auto">
+    <div className="mb-10 max-w-xl w-xl mx-auto">
       <div className="flex items-center gap-2">
         <div className=" flex-1">
           <input
@@ -28,7 +33,7 @@ const Search = () => {
 
         {/* Search Button */}
         <button
-          disabled={searchInput.length <= 0}
+          disabled={searchInput===initialSearchInput}
           onClick={handleSearch}
           className="px-5 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black font-bold rounded-2xl transition-all shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 flex items-center gap-2 whitespace-nowrap cursor-pointer"
         >
