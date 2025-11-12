@@ -102,6 +102,7 @@ export default function LoginForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  disabled={isLoading}
                   required
                   className="w-full px-4 py-3 bg-black/50 border-2 border-gray-700 focus:border-emerald-500 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none transition-all"
                   placeholder="you@example.com"
@@ -122,6 +123,7 @@ export default function LoginForm() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  disabled={isLoading}
                   required
                   className="w-full px-4 py-3 bg-black/50 border-2 border-gray-700 focus:border-emerald-500 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none transition-all"
                   placeholder="••••••••"

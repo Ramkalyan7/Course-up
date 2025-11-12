@@ -17,6 +17,7 @@ type Props = {
 export default async function CoursesPage({ searchParams }: Props) {
   const ITEMS_PER_PAGE = 3;
   const { q, p, d } = await searchParams;
+  console.log(q, p, d);
 
   const searchQuery = q?.toLowerCase().trim() || "";
   let currentPage = parseInt(p || "1");
@@ -36,11 +37,22 @@ export default async function CoursesPage({ searchParams }: Props) {
     ],
   };
 
+  const filter2: Prisma.CourseWhereInput = {
+    difficulty:
+      difficultyLevel === "all"
+        ? undefined
+        : {
+            equals: difficultyLevel.toString(),
+            mode: "insensitive",
+          },
+  };
+
   const getCourses = async () => {
     try {
       const skip = (currentPage - 1) * ITEMS_PER_PAGE;
       const coursesList = await prisma.course.findMany({
-        where: searchQuery.length > 0 ? filter1 : {},
+        where:
+          searchQuery.length > 0 ? filter1 : difficultyLevel ? filter2 : {},
         skip: skip > 0 ? skip : 0,
         take: ITEMS_PER_PAGE,
         select: {
@@ -67,7 +79,8 @@ export default async function CoursesPage({ searchParams }: Props) {
   const getTotalPages = async () => {
     try {
       const totalPages = await prisma.course.count({
-        where: searchQuery.length > 0 ? filter1 : {},
+        where:
+          searchQuery.length > 0 ? filter1 : difficultyLevel ? filter2 : {},
       });
       return totalPages;
     } catch (error) {

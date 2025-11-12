@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 const Search = ({initialSearchInput=""}:{initialSearchInput:string}) => {
   const [searchInput, setSearchInput] = useState<string>("");
-  console.log("Infinity",initialSearchInput)
   const router = useRouter();
 
   const handleSearch = () => {

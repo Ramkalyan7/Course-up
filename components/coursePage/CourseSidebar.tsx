@@ -46,7 +46,7 @@ export default function CourseSidebar({
           <button
             key={subtopic.id}
             onClick={() => onSubtopicSelect(subtopic)}
-            className={`relative w-full text-left p-4 rounded-xl transition-all duration-200 group ${
+            className={`relative w-full text-left p-4 rounded-xl transition-all duration-200 group cursor-pointer ${
               selectedSubtopic?.id === subtopic.id
                 ? "bg-linear-to-r from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/30 scale-105"
                 : "bg-gray-800/50 hover:bg-gray-800 border border-gray-700/50 hover:border-emerald-500/30"

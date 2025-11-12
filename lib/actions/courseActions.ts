@@ -59,7 +59,7 @@ export async function getCourseById(courseId: string) {
                     },
                     select: {
                         subtopicId: true,
-                        completed:true
+                        completed: true
                     }
                 }
             },
@@ -109,3 +109,36 @@ export async function SetProgress(
         return { error: "Failed to update progress" };
     }
 }
+
+
+export const getUserProgress = async (userId: string) => {
+    const courses = await prisma.course.findMany({
+        where: {
+            progress: {
+                some: {
+                    userId: userId,
+                },
+            },
+        },
+        include: {
+            progress: {
+                where: {
+                    userId: userId,
+                    completed: true,
+                },
+            },
+            _count: {
+                select: {
+                    subtopics: true,
+                },
+            },
+        },
+       
+        orderBy: {
+            updatedAt: "desc",
+        },
+    });
+
+    return courses;
+}
+

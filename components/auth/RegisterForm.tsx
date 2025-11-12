@@ -147,6 +147,7 @@ export default function RegisterForm() {
                       : "border-gray-700 focus:border-emerald-500"
                   } rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none transition-all`}
                   placeholder="John Doe"
+                  disabled={isLoading}
                 />
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-400">{errors.name}</p>
@@ -173,6 +174,7 @@ export default function RegisterForm() {
                       : "border-gray-700 focus:border-emerald-500"
                   } rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none transition-all`}
                   placeholder="you@example.com"
+                  disabled={isLoading}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-400">{errors.email}</p>
@@ -199,6 +201,7 @@ export default function RegisterForm() {
                       : "border-gray-700 focus:border-emerald-500"
                   } rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none transition-all`}
                   placeholder="••••••••"
+                  disabled={isLoading}
                 />
                 {errors.password && (
                   <p className="mt-1 text-sm text-red-400">{errors.password}</p>
@@ -225,6 +228,7 @@ export default function RegisterForm() {
                       : "border-gray-700 focus:border-emerald-500"
                   } rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none transition-all`}
                   placeholder="••••••••"
+                  disabled={isLoading}
                 />
                 {errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-400">

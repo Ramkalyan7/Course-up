@@ -116,7 +116,7 @@ export default function CoursePage() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push("/searchcourses");
+      router.push("/login");
       return;
     }
     if (!params.id) {

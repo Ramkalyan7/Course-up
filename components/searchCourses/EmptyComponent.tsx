@@ -23,7 +23,7 @@ const EmptyStateComponent = () => {
         onClick={() => {
           router.push(`/searchcourses?q=&d=&p=`);
         }}
-        className="px-8 py-3 bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-500/30"
+        className="px-8 py-3 bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-500/30 cursor-pointer"
       >
         Clear Filters
       </button>

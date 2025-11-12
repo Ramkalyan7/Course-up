@@ -14,7 +14,6 @@ const Filters = ({ difficultyLevel, searchQuery }: Props) => {
 
   const handleFilterClick = (difficulty: string) => {
     router.push(`/searchcourses/?q=${searchQuery}&d=${difficulty}`);
-
     return;
   };
 
