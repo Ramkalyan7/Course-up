@@ -51,4 +51,24 @@ export interface Question {
   explanation: string;
 }
 
+export type CourseProgress = {
+  id: string;
+  mainTopic: string;
+  description: string;
+  imageUrl: string;
+  difficulty: string;
+  userId: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  progress: Progress[];
+  _count: { subtopics: number };
+};
 
+export type Progress = {
+  id: string;
+  userId: string;
+  courseId: string;
+  subtopicId: string;
+  completed: boolean;
+};

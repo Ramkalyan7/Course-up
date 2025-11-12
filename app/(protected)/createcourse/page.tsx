@@ -7,6 +7,7 @@ import axios from "axios";
 interface ProgressUpdate {
   status: "in_progress" | "completed";
   message: string;
+  courseId?: string;
 }
 
 interface PopularTopicType {
@@ -21,7 +22,7 @@ export default function CreateCourse() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [isComplete, setIsComplete] = useState(false);
-  const [error , setError] = useState<string|null>(null)
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,17 +64,17 @@ export default function CreateCourse() {
             if (update.status === "completed") {
               setIsComplete(true);
               setTimeout(() => {
-                router.push("/course");
+                router.push(`/course/${update.courseId}`);
               }, 2000);
             }
           } catch (e) {
-            // Ignore parse errors
+            console.log(e);
           }
         }
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("Error while generating the course . Please try again !")
+      setError("Error while generating the course . Please try again !");
       setIsGenerating(false);
     }
   };
@@ -86,7 +87,7 @@ export default function CreateCourse() {
     },
     {
       title: "Python Basics",
-      icon: "🐍",
+      icon: "</>",
       color: "from-yellow-500/20 to-green-500/20",
     },
     {
@@ -133,16 +134,20 @@ export default function CreateCourse() {
           <div className="w-full">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Input Box with better design */}
-               {error && <p className="mt-1 text-sm text-red-400 text-center font-semibold">{error}</p>}
+              {error && (
+                <p className="mt-1 text-sm text-red-400 text-center font-semibold">
+                  {error}
+                </p>
+              )}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
                 <input
                   type="text"
                   value={topic}
                   onChange={(e) => {
-                    setTopic(e.target.value)
-                    if(error){
-                      setError(null)
+                    setTopic(e.target.value);
+                    if (error) {
+                      setError(null);
                     }
                   }}
                   placeholder="What do you want to master today?"

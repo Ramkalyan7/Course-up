@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default async function CoursesPage({ searchParams }: Props) {
-  const ITEMS_PER_PAGE = 3;
+  const ITEMS_PER_PAGE = 6;
   const { q, p, d } = await searchParams;
   console.log(q, p, d);
 

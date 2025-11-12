@@ -140,12 +140,13 @@ export async function generateCompleteCourseWithStream(
 
             await tx.course.update({
                 where: { id: course.id },
-                data: { status: 'completed' }
+                data: { status: 'completed'}
             });
 
             onProgress({
                 status: 'completed',
-                message: `Your course "${topic}" is ready!`
+                message: `Your course "${topic}" is ready!`,
+                courseId: course.id 
             });
 
             return course.id;
