@@ -22,7 +22,8 @@ export default function Navbar({}) {
   if (
     pathName === "/login" ||
     pathName === "/register" ||
-    pathName.startsWith("/course")
+    pathName.startsWith("/course")||
+    pathName.startsWith("/quiz")
   ) {
     return null;
   }

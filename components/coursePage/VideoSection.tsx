@@ -1,3 +1,5 @@
+import { Video } from "@/lib/types/course";
+
 interface VideosSectionProps {
   videos: Video[];
 }

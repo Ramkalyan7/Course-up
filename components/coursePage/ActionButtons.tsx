@@ -40,7 +40,7 @@ export default function ActionButtons({
         className={`w-full py-3.5 sm:py-4 px-5 sm:px-6 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer ${
           isCompleted
             ? "bg-gray-800 border-2 border-emerald-500/50 text-emerald-400 hover:bg-gray-700"
-            : "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50"
+            : "bg-linear-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50"
         } ${!hasQuiz ? "sm:col-span-2" : ""}`}
       >
         {isCompleted ? (

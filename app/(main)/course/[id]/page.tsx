@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getCourseById, SetProgress } from "@/lib/actions/courseActions";
-import LoadingState from "@/components/coursePage/Loading";
+import LoadingState from "@/components/Loading";
 import NotFoundState from "@/components/coursePage/NotFoundState";
 import MobileMenuButton from "@/components/coursePage/MobileMenuButton";
 import CourseHeader from "@/components/coursePage/CourseHeader";
@@ -109,7 +109,9 @@ export default function CoursePage() {
   };
 
   const handleTakeQuiz = () => {
-    router.push(`/quiz/${selectedSubtopic?.quizzes[0].id}`);
+    router.push(
+      `/quiz/${selectedSubtopic?.quizzes[0].id}?title=${selectedSubtopic?.title}`
+    );
   };
 
   useEffect(() => {
