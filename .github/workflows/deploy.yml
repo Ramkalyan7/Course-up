@@ -1,0 +1,34 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            --build-arg PERPLEXITY_API_KEY="${{ secrets.PERPLEXITY_API_KEY }}" \
+            --build-arg YOUTUBE_API_KEY="${{ secrets.YOUTUBE_API_KEY }}" \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/your-app:${{ github.sha }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/your-app:latest \
+            .
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/your-app:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/your-app:latest
