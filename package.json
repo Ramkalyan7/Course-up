@@ -13,6 +13,7 @@
   "dependencies": {
     "@perplexity-ai/perplexity_ai": "^0.16.0",
     "@prisma/client": "^6.19.0",
+    "@reduxjs/toolkit": "^2.10.1",
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
@@ -21,6 +22,7 @@
     "prisma": "^6.19.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-redux": "^9.2.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
