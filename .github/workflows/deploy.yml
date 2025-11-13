@@ -24,8 +24,8 @@ jobs:
           docker build \
             --build-arg PERPLEXITY_API_KEY="${{ secrets.PERPLEXITY_API_KEY }}" \
             --build-arg YOUTUBE_API_KEY="${{ secrets.YOUTUBE_API_KEY }}" \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/your-app:${{ github.sha }} \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/your-app:latest \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/course-up:${{ github.sha }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/course-up:latest \
             .
 
       - name: Push Docker Image
