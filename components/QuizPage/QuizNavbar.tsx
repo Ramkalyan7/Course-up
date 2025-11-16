@@ -114,9 +114,6 @@ export default function QuizNavbar({
               {/* Mobile Layout - Stacked */}
               <div className="flex flex-col gap-3 sm:hidden">
                 <div className="flex items-center gap-2.5">
-                  <span className="text-xl">
-                    {percentage >= 70 ? "🎉" : percentage >= 50 ? "👍" : "📚"}
-                  </span>
                   <div className="flex-1">
                     <p className="text-gray-100 font-bold text-base">
                       {percentage}% Score
@@ -157,9 +154,6 @@ export default function QuizNavbar({
               {/* Desktop/Tablet Layout - Horizontal */}
               <div className="hidden sm:flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">
-                    {percentage >= 70 ? "🎉" : percentage >= 50 ? "👍" : "📚"}
-                  </span>
                   <div>
                     <p className="text-gray-100 font-bold text-lg">
                       {percentage}% Score

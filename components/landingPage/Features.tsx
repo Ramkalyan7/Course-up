@@ -1,37 +1,32 @@
 export default function Features() {
   const features = [
     {
-      icon: "🤖",
       title: "AI-Powered Generation",
       description: "Our AI creates personalized learning paths tailored to your goals and learning style.",
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
     },
     {
-      icon: "📚",
       title: "Comprehensive Content",
       description: "Get detailed lessons, practical examples, video resources, and quizzes all in one place.",
       image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=400&fit=crop",
     },
     {
-      icon: "⚡",
       title: "Learn at Your Pace",
       description: "Study when you want, track your progress, and complete courses on your own schedule.",
       image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop",
     },
     {
-      icon: "🎯",
       title: "Interactive Quizzes",
       description: "Test your knowledge with AI-generated quizzes and get instant feedback on your answers.",
       image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&h=400&fit=crop",
     },
     {
-      icon: "📊",
       title: "Track Progress",
       description: "Monitor your learning journey with detailed progress tracking and completion certificates.",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
     },
     {
-      icon: "🌐",
+     
       title: "Learn Anything",
       description: "From coding to cooking, generate courses on any topic that interests you.",
       image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=600&h=400&fit=crop",
@@ -70,9 +65,6 @@ export default function Features() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
-                <div className="absolute top-4 left-4 w-12 h-12 bg-emerald-500/20 backdrop-blur-sm border border-emerald-500/50 rounded-lg flex items-center justify-center text-2xl">
-                  {feature.icon}
-                </div>
               </div>
 
               {/* Content */}

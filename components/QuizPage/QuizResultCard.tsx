@@ -36,9 +36,7 @@ export default function QuizResultCard({ score }: QuizResultCardProps) {
                 : "bg-red-500/20"
             }`}
           >
-            <span className="text-4xl sm:text-5xl">
-              {percentage >= 70 ? "🎉" : percentage >= 50 ? "👍" : "📚"}
-            </span>
+           
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-100 mb-2">
             {percentage}%

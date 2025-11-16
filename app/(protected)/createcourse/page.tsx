@@ -12,7 +12,6 @@ interface ProgressUpdate {
 
 interface PopularTopicType {
   title: string;
-  icon: string;
   color: string;
 }
 
@@ -82,22 +81,18 @@ export default function CreateCourse() {
   const PopularTopics: PopularTopicType[] = [
     {
       title: "React Fundamentals",
-      icon: "⚛️",
       color: "from-blue-500/20 to-cyan-500/20",
     },
     {
       title: "Python Basics",
-      icon: "</>",
       color: "from-yellow-500/20 to-green-500/20",
     },
     {
       title: "Web Design 101",
-      icon: "🎨",
       color: "from-purple-500/20 to-pink-500/20",
     },
     {
       title: "Data Science",
-      icon: "📊",
       color: "from-orange-500/20 to-red-500/20",
     },
   ];
@@ -185,7 +180,7 @@ export default function CreateCourse() {
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-3">
-                      <span>✨ Generate Course</span>
+                      <span> Generate Course</span>
                       <svg
                         className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                         fill="none"
@@ -222,7 +217,6 @@ export default function CreateCourse() {
                     className={`group relative p-5 bg-gradient-to-br ${example.color} backdrop-blur-sm border border-slate-700/50 hover:border-emerald-500/50 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 disabled:scale-100 shadow-lg hover:shadow-emerald-500/10 cursor-pointer`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="text-3xl">{example.icon}</div>
                       <div className="flex-1 text-left">
                         <p className="font-semibold text-gray-200 group-hover:text-emerald-400 transition-colors">
                           {example.title}
