@@ -93,31 +93,3 @@ NextAuth is configured in the project. Ensure NEXTAUTH_SECRET and NEXTAUTH_URL a
 
 Perplexity AI integration
 The project depends on @perplexity-ai/perplexity_ai to generate course content. Set PERPLEXITY_API_KEY in your environment before using features that call Perplexity. Treat this key as a secret.
-
-Database notes
-- For production use Postgres (or another supported RDBMS).
-- For local development, sqlite is easiest (DATABASE_URL=sqlite:./dev.db).
-- Use Prisma to manage migrations and generate the client.
-
-Development tips
-- TypeScript types are included; run the TypeScript compiler and ESLint regularly (npm run lint).
-- If you change Prisma schema, run npx prisma generate and npx prisma migrate dev to keep the DB schema in sync.
-
-Testing
-- There is a script hook test:backend that runs tsx scripts/test-backend.ts. Inspect scripts/ for test utilities. Add unit/integration tests as needed.
-
-Contributing
-Contributions are welcome. Please follow these steps:
-1. Fork the repository.
-2. Create a feature branch (git checkout -b feat/your-feature).
-3. Make changes and add tests.
-4. Open a pull request describing your changes.
-
-Security
-Do not commit secrets or .env files. If you discover a security issue, please open an issue or contact the maintainers privately.
-
-License
-This project is provided under the MIT License.
-
-Contact
-If you have questions or need help, open an issue on the repository or reach out to the maintainer: https://github.com/Ramkalyan7
