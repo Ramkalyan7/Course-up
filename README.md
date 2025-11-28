@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Course-up
 
-## Getting Started
+AI course builder — Learn anything for free.
 
-First, run the development server:
+Course-up is a Next.js + TypeScript application that helps generate and organize AI-powered learning courses. It uses Prisma for the database, NextAuth for authentication, the Perplexity AI SDK for content generation, Tailwind CSS for styling, and Redux for client state management.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Features
+- Generate course content using the Perplexity AI SDK
+- User authentication with NextAuth
+- Type-safe API and forms using TypeScript and Zod
+- Database access via Prisma and a relational database (Postgres or SQLite for local dev)
+- Tailwind CSS (v4) for layout and styling
+- Dockerfile for containerized deployment
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tech stack
+- Next.js 16 (React 19)
+- TypeScript
+- Prisma (ORM)
+- NextAuth (authentication)
+- Perplexity AI SDK
+- Redux Toolkit + React Redux
+- Tailwind CSS
+- Zod for schema validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Getting started
+These instructions assume you have Node.js (>= 18), pnpm/npm/yarn, and a database (for production use Postgres; for local development you can use SQLite).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1) Clone the repo\n
+   git clone https://github.com/Ramkalyan7/Course-up.git
+   cd Course-up
 
-## Learn More
+2) Install dependencies\n
+   npm install
 
-To learn more about Next.js, take a look at the following resources:
+3) Create environment variables
+Create a .env file at the project root (do NOT commit this file). Example variables the app expects:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   # Database
+   DATABASE_URL=postgresql://user:password@localhost:5432/courseup?schema=public
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   # NextAuth
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your_nextauth_secret_here
 
-## Deploy on Vercel
+   # Perplexity AI (used to generate course content)
+   PERPLEXITY_API_KEY=your_perplexity_api_key_here
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   # Optional runtime
+   NODE_ENV=development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you prefer SQLite for local development, set DATABASE_URL to sqlite:./dev.db
+
+4) Set up Prisma
+
+   # generate client (runs automatically when you run a migration as well)
+   npx prisma generate
+
+   # create migration and apply it locally (adjust name as appropriate)
+   npx prisma migrate dev --name init
+
+5) Run the development server
+
+   npm run dev
+
+The app will be available at http://localhost:3000 by default.
+
+Available scripts
+- npm run dev — run Next.js in development mode
+- npm run build — build the app for production
+- npm run start — start the production server after build
+- npm run lint — run ESLint
+- npm run test:backend — run backend tests/script (uses tsx scripts/test-backend.ts)
+
+Docker
+Build and run with Docker (the repository includes a Dockerfile and .dockerignore):
+
+   # build image
+   docker build -t course-up .
+
+   # run container (example mapping port 3000)
+   docker run -e DATABASE_URL="your_database_url" -e NEXTAUTH_SECRET="your_secret" -p 3000:3000 course-up
+
+When running via Docker you still need to provide the required environment variables to the container.
+
+Deployment
+- Vercel: Next.js apps deploy well to Vercel. Set environment variables in your Vercel project settings (DATABASE_URL, NEXTAUTH_SECRET, PERPLEXITY_API_KEY, NEXTAUTH_URL, etc.).
+- Docker: Push the built image to your container registry and run it on your infrastructure, providing the same environment variables.
+
+Authentication
+NextAuth is configured in the project. Ensure NEXTAUTH_SECRET and NEXTAUTH_URL are set in your environment. Providers (GitHub, Google, Credentials, etc.) can be configured via environment variables or the adapter used in the project.
+
+Perplexity AI integration
+The project depends on @perplexity-ai/perplexity_ai to generate course content. Set PERPLEXITY_API_KEY in your environment before using features that call Perplexity. Treat this key as a secret.
+
+Database notes
+- For production use Postgres (or another supported RDBMS).
+- For local development, sqlite is easiest (DATABASE_URL=sqlite:./dev.db).
+- Use Prisma to manage migrations and generate the client.
+
+Development tips
+- TypeScript types are included; run the TypeScript compiler and ESLint regularly (npm run lint).
+- If you change Prisma schema, run npx prisma generate and npx prisma migrate dev to keep the DB schema in sync.
+
+Testing
+- There is a script hook test:backend that runs tsx scripts/test-backend.ts. Inspect scripts/ for test utilities. Add unit/integration tests as needed.
+
+Contributing
+Contributions are welcome. Please follow these steps:
+1. Fork the repository.
+2. Create a feature branch (git checkout -b feat/your-feature).
+3. Make changes and add tests.
+4. Open a pull request describing your changes.
+
+Security
+Do not commit secrets or .env files. If you discover a security issue, please open an issue or contact the maintainers privately.
+
+License
+This project is provided under the MIT License.
+
+Contact
+If you have questions or need help, open an issue on the repository or reach out to the maintainer: https://github.com/Ramkalyan7
+
+TODO / roadmap
+- Add example screenshots and demo link
+- Add seed scripts for demo data
+- Add CI workflows and unit/integration tests
+- Improve documentation for configuration of auth providers and Perplexity usage
+
