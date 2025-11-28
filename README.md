@@ -25,11 +25,13 @@ Tech stack
 Getting started
 These instructions assume you have Node.js (>= 18), pnpm/npm/yarn, and a database (for production use Postgres; for local development you can use SQLite).
 
-1) Clone the repo\n
+1) Clone the repo
+
    git clone https://github.com/Ramkalyan7/Course-up.git
    cd Course-up
 
-2) Install dependencies\n
+2) Install dependencies
+
    npm install
 
 3) Create environment variables
@@ -119,10 +121,3 @@ This project is provided under the MIT License.
 
 Contact
 If you have questions or need help, open an issue on the repository or reach out to the maintainer: https://github.com/Ramkalyan7
-
-TODO / roadmap
-- Add example screenshots and demo link
-- Add seed scripts for demo data
-- Add CI workflows and unit/integration tests
-- Improve documentation for configuration of auth providers and Perplexity usage
-
